@@ -7,28 +7,31 @@ if (process.env.NODE_ENV === "production") {
     ready() {
       console.log(
         "App is being served from cache by a service worker.\n" +
-          "For more details, visit https://goo.gl/AFskqB"
-      );
+        "For more details, visit https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa"
+      )
     },
-    registered() {
-      console.log("Service worker has been registered.");
+    registered(registration) {
+      console.log("Service worker has been registered.")
+      // Check for update with hourly interval
+      setInterval(() => {
+        registration.update()
+      }, 1000 * 60 * 60)
     },
     cached() {
-      console.log("Content has been cached for offline use.");
+      console.log("Content has been cached for offline use.")
     },
     updatefound() {
-      console.log("New content is downloading.");
+      console.log("New content is downloading.")
     },
-    updated() {
-      console.log("New content is available; please refresh.");
+    updated(registration) {
+      console.log("New content is available; please refresh.")
+      document.dispatchEvent( new CustomEvent('swUpdated', { detail: registration }) )
     },
     offline() {
-      console.log(
-        "No internet connection found. App is running in offline mode."
-      );
+      console.log("No internet connection found. App is running in offline mode.")
     },
     error(error) {
-      console.error("Error during service worker registration:", error);
+      console.error("Error during service worker registration:", error)
     }
-  });
+  })
 }
