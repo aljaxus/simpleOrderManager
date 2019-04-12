@@ -12,6 +12,10 @@ module.exports = {
     workboxOptions: {
       swSrc: './src/sw.js',
       swDest: 'service-worker.js',
+      globStrict: true,
+      include: [
+        /\.html$/
+      ]
     },
   },
 }
