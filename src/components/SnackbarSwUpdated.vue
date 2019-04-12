@@ -9,6 +9,8 @@
 		New version is out!
 		<v-spacer />
 		<v-btn
+      :loading="loadingSnack"
+      :readonly="loadingSnack"
 			color="#00f500"
 			flat
 			@click="refreshApp"
@@ -18,12 +20,15 @@
 	</v-snackbar>
 </template>
 <script>
+
+import { setTimeout } from 'timers';
 export default {
 	data () {
 		return {
 			refreshing: false,
 			registration: null,
-      showSnack: false
+      showSnack: false,
+      loadingSnack: false,
 		}
 	},
 	methods: {
@@ -32,9 +37,12 @@ export default {
       this.showSnack = true;
     },
     refreshApp () {
-      this.showSnack = false;
-      if (!this.registration || !this.registration.waiting) { return; }
-      this.registration.waiting.postMessage('skipWaiting');
+      this.loadingSnack = true
+      setTimeout(() => {
+        this.showSnack = false
+        if (!this.registration || !this.registration.waiting) return false
+        this.registration.waiting.postMessage('skipWaiting')
+      }, 550)
     }
 	},
 	created () {
