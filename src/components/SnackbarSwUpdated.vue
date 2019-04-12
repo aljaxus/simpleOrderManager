@@ -20,8 +20,8 @@
 	</v-snackbar>
 </template>
 <script>
-
 import { setTimeout } from 'timers';
+
 export default {
 	data () {
 		return {
@@ -47,11 +47,14 @@ export default {
 	},
 	created () {
     document.addEventListener('swUpdated', this.showRefreshUI, { once: true });
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (this.refreshing) return;
-      this.refreshing = true;
-      window.location.reload()
-    });
+    
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (this.refreshing) return;
+        this.refreshing = true;
+        window.location.reload()
+      })
+    }
 	}
 }
 </script>
