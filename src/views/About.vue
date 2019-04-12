@@ -6,3 +6,8 @@
     <p>simpleOrderManager is fully open-source.</p>
   </div>
 </template>
+<script>
+export default {
+  name: "AboutRoute"
+}
+</script>
