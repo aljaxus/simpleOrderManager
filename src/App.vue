@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <Toolbar />
+    <Navigation />
 
-    <v-content class="ma-2">
+    <v-content class="pa-2">
       <transition name="fade" mode="out-in" appear>
         <router-view></router-view>
       </transition>
@@ -17,7 +17,7 @@
 export default {
   name: 'App',
   components: {
-    'Toolbar': () => import('./components/Toolbar'),
+    'Navigation': () => import('./components/Navigation'),
     'swUpdateSnackbar': () => import('./components/SnackbarSwUpdated')
   },
   data () {

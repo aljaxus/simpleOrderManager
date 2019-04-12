@@ -10,7 +10,6 @@
 		<v-spacer />
 		<v-btn
 			color="#00f500"
-			dark
 			flat
 			@click="refreshApp"
 		>
