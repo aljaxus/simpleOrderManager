@@ -1,8 +1,9 @@
 <template>
-  <v-app dark>
-    <Navigation />
+  <v-app :dark="appDark">
+    <Toolbar />
+    <Sidebar />
 
-    <v-content class="pa-2">
+    <v-content class="ma-2">
       <transition name="fade" mode="out-in" appear>
         <router-view></router-view>
       </transition>
@@ -12,16 +13,22 @@
   </v-app>
 </template>
 <script>
+import Store from './store'
+
 export default {
   name: 'App',
   components: {
-    'Navigation': () => import('./components/Navigation'),
+    'Toolbar': () => import('./components/Toolbar'),
+    'Sidebar': () => import('./components/Sidebar'),
     'swUpdateSnackbar': () => import('./components/SnackbarSwUpdated')
   },
   data () {
     return {
       
     }
+  },
+  computed: {
+    appDark: () => Store.getters['App/darkMode']
   }
 }
 </script>
