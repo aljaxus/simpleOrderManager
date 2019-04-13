@@ -19,8 +19,8 @@
 
         <v-list-tile avatar tag="div" v-if="!sidebarMini && $vuetify.breakpoint.lgAndUp">
  
-          <v-list-tile-content v-if="sidebarMini">
-            <v-list-tile-title>SOM</v-list-tile-title>
+          <v-list-tile-content>
+            <v-list-tile-title>simple<span style="font-weight:bold;">OrderManager</span><v-icon style="font-size:medium;">mdi-coffee</v-icon></v-list-tile-title>
           </v-list-tile-content>
 
           <v-list-tile-action>
@@ -49,38 +49,27 @@
               <v-list-tile-title>{{ i.title }}</v-list-tile-title>
             </v-list-tile-content>  
           </v-list-tile>
-
-          <v-list-group
-            v-if="i.items"
-            active-class=""
-            :prepend-icon="i.icon"
-            value="true"
-          >
-            <template v-slot:activator>
-              <v-list-tile>
-                <v-list-tile-title>{{ i.title }}</v-list-tile-title>
-              </v-list-tile>
-            </template>
-            <template
-              v-for="(l, m) in i.items"
-            >
-              <v-list-tile
-                :key="m"
-                v-if="l.permission?!!perms[l.permission]:true"
-                :class="!sidebarMini?'pl-3':''"
-                :to="l.to"
-              >
-                <v-list-tile-action v-if="l.icon">
-                  <v-icon>{{ l.icon }}</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-title v-if="!sidebarMini">{{ l.title }}</v-list-tile-title>
-              </v-list-tile>
-            </template>
-          </v-list-group>
         </div>
 
       </v-list>
       <v-spacer></v-spacer>
+      
+      <v-list>
+        <v-list-tile v-if="sidebarMini" @click="toggleDarkMode">
+          <v-list-tile-action>
+            <v-icon small v-if="!darkMode">mdi-weather-sunny</v-icon>
+            <v-icon small v-if="darkMode">mdi-weather-night</v-icon>
+          </v-list-tile-action>
+        </v-list-tile>
+        <v-list-tile v-if="!sidebarMini">
+          <v-list-tile-content class="text-xs-center" align-content-center>
+            <v-list-tile-action>
+              <v-switch v-model="darkMode" prepend-icon="mdi-weather-sunny" append-icon="mdi-weather-night"></v-switch>
+            </v-list-tile-action>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+
       <v-list :class="sidebarMini?'':'pb-1'">
         <v-list-tile v-if="sidebarMini" href="https://aljaxus.eu" target="_blank">
           <v-list-tile-action>
@@ -110,15 +99,19 @@ import Store from '@/store'
 export default {
   data () { return {
     items: [
-      { title: 'Home', to: {name: 'home'}, icon: 'mdi-home' },
-      { title: 'App', to: {name: 'app'}, icon: 'mdi-apps' },
+      { title: this.$t('home'), to: {name: 'home'}, icon: 'mdi-home' },
+      { title: (this.$t('app')).firstToUpperCase('a'), to: {name: 'app'}, icon: 'mdi-apps' },
     ]
   }},
   computed: {
+    darkMode: {
+			get () { return Store.getters['App/darkMode'] },
+			set: data => { Store.dispatch('App/toggleDarkMode', data) }
+    },
     sidebarMini: {
 			get () {
 				if (this.$vuetify.breakpoint.mdAndDown) return false
-				return Store.getters['App/sidebarMini']
+				return Store.getters['App/sidebarMini'] 
 			},
 			set: data => {
         Store.dispatch('App/toggleSidebarMini', data)
@@ -128,6 +121,9 @@ export default {
 			get () { return this.$vuetify.breakpoint.lgAndUp ? true : Store.getters['App/sidebarState'] },
 			set: data => Store.dispatch('App/toggleSidebarState', data)
     }
+  },
+  methods: {
+    toggleDarkMode () { this.darkMode = !this.darkMode }
   }
 }
 </script>

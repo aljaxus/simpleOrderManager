@@ -8,6 +8,8 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@mdi/font/css/materialdesignicons.css'
 import i18n from './plugins/i18n'
 
+import './prototypes'
+
 Vue.config.productionTip = false;
 
 new Vue({

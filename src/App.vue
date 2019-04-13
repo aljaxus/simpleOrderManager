@@ -3,10 +3,10 @@
     <Toolbar />
     <Sidebar />
 
-    <v-content class="ma-2">
-      <transition name="fade" mode="out-in" appear>
-        <router-view></router-view>
-      </transition>
+    <v-content class="ma-2" fill-height>
+        <transition name="fade" mode="out-in" appear>
+          <router-view></router-view>
+        </transition>
     </v-content>
 
     <swUpdateSnackbar />
