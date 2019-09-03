@@ -29,10 +29,11 @@ const App = {
   }
 }
 
-const Products = {
+const Order = {
   namespaced: true,
   state: {
-
+    items: [],
+    orders: []
   },
   mutations: {
 
@@ -41,7 +42,8 @@ const Products = {
 
   },
   getters: {
-
+    allItems: state => state.items,
+    allOrders: state => state.orders,
   }
 }
 
@@ -49,7 +51,7 @@ const Products = {
 export default new Vuex.Store({
   modules: {
     App,
-    Products
+    Order
   },
   state: {},
   mutations: {},

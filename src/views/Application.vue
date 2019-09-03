@@ -26,18 +26,17 @@
 </template>
 <script>
 import Store from '@/store'
-const test = [
-  'testing'
-]
-
 
 export default {
   name: 'ApplicationRoute',
   data: () => { return {
-    Store
+    Store,
+    orders: {
+    }
   }},
   computed: {
-
+    items () {return Store.getters['Order/allItems']},
+    orders () {return Store.getters['Order/allOrders']},
   }
 }
 </script>
